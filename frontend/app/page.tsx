@@ -37,7 +37,6 @@ function optionalPositiveNumber(max?: number, maxMessage?: string) {
 
 const driverSchema = z.object({
   name: z.string().trim().min(1, "Nome obrigatório"),
-  weightKg: optionalPositiveNumber(),
   maxStintMin: optionalPositiveNumber(
     DISPLAY_RULES.maxStintMin,
     `Máx. ${DISPLAY_RULES.maxStintMin} min`,
@@ -58,7 +57,7 @@ type SetupFormInput = z.input<typeof setupSchema>;
 type SetupFormOutput = z.output<typeof setupSchema>;
 
 function emptyDriver(): SetupFormInput["drivers"][number] {
-  return { name: "", weightKg: "", maxStintMin: String(DISPLAY_RULES.maxStintMin) };
+  return { name: "", maxStintMin: String(DISPLAY_RULES.maxStintMin) };
 }
 
 export default function SetupPage() {
@@ -99,7 +98,6 @@ export default function SetupPage() {
         : DISPLAY_RULES.raceDurationSec,
       drivers: data.drivers.map((d) => ({
         name: d.name,
-        weightKg: d.weightKg,
         maxStintSec: d.maxStintMin ? Math.round(d.maxStintMin * 60) : undefined,
       })),
     };
@@ -195,21 +193,6 @@ export default function SetupPage() {
                   {errors.drivers?.[index]?.name && (
                     <p className="text-destructive text-xs">
                       {errors.drivers[index]?.name?.message}
-                    </p>
-                  )}
-                </div>
-                <div className="grid gap-1.5 sm:w-32">
-                  <Label htmlFor={`drivers.${index}.weightKg`}>Peso (kg)</Label>
-                  <Input
-                    id={`drivers.${index}.weightKg`}
-                    type="number"
-                    step="0.1"
-                    placeholder="opcional"
-                    {...register(`drivers.${index}.weightKg`)}
-                  />
-                  {errors.drivers?.[index]?.weightKg && (
-                    <p className="text-destructive text-xs">
-                      {errors.drivers[index]?.weightKg?.message}
                     </p>
                   )}
                 </div>

@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build output
+dist/
+.next/
+out/
+
+# env files
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+
+# editor
+.claude/
+PLANO.md
